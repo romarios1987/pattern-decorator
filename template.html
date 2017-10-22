@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Template engine</title>
+</head>
+<body>
+<div id="user1"></div>
+<div id="user2"></div>
+<script>
+    var templateString = 'Hello, {{city}} {{age}}! #{{name}}';
+    var user1 = {id: 1, name: 'john', age: 123, city: 'kyiv'};
+    var user2 = {id: 2, name: 'alex', age: 55, city: 'lviv'};
+    var compile = function (template) {
+        return function (obj) {
+            var div = '#user' + obj.id;
+            var correctString = templateString
+                .replace(/{{city}}/g, '')
+                .replace(/{{age}}!/g, '')
+                .replace(/\s+/g, '')
+                .replace(/#{{name}}/g, " " + obj.name + "!");
+            document.querySelector(div).innerHTML = correctString;
+            return correctString;
+        };
+    };
+    var template = compile(templateString);
+    console.log(template(user1)); // => Hello, john!
+    console.log(template(user2)); // => Hello, alex!
+</script>
+</body>
+</html>
