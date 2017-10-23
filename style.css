@@ -14,6 +14,9 @@ body::before {
     height: 100%;
     background-color: rgba(0, 0, 0, .7);
 }
+.container h1{
+    color: #ffffff;
+}
 .data-table .bg-danger{
     background-color: #ca1f1f;
 }
