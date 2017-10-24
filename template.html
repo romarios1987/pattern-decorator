@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Template engine</title>
+    <style>
+    	.st{
+    		font-weight: bold;
+    		font-size: 17px;
+    	}
+    </style>
 </head>
 <body>
-<div id="user1"></div>
-<div id="user2"></div>
+<div id="user1" class="st"></div>
+<div id="user2" class="st"></div>
 <script>
     var templateString = 'Hello, {{city}} {{age}}! #{{name}}';
     var user1 = {id: 1, name: 'john', age: 123, city: 'kyiv'};
@@ -15,17 +21,17 @@
         return function (obj) {
             var div = '#user' + obj.id;
             var correctString = templateString
-                .replace(/{{city}}/g, '')
-                .replace(/{{age}}!/g, '')
-                .replace(/\s+/g, '')
-                .replace(/#{{name}}/g, " " + obj.name + "!");
+                .replace(/{{city}}/g, obj.city)
+                .replace(/{{age}}!/g, obj.age + "!")
+                //.replace(/\s+/g, '')
+                .replace(/#{{name}}/g, "#" + obj.name);
             document.querySelector(div).innerHTML = correctString;
             return correctString;
         };
     };
     var template = compile(templateString);
-    console.log(template(user1)); // => Hello, john!
-    console.log(template(user2)); // => Hello, alex!
+    console.log(template(user1)); // => Hello, kyiv 123! #john
+    console.log(template(user2)); // => Hello, lviv 55! #alex
 </script>
 </body>
 </html>
